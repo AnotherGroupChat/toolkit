@@ -18,7 +18,8 @@ const testEnvVars = {
   INPUT_MISSING: '',
   'INPUT_SPECIAL_CHARS_\'\t"\\': '\'\t"\\ response ',
   INPUT_MULTIPLE_SPACES_VARIABLE: 'I have multiple spaces',
-
+  INPUT_MY_DASHING_VARIABLE: 'fabulous',
+  
   // Save inputs
   STATE_TEST_1: 'state_val'
 }
@@ -99,6 +100,12 @@ describe('@actions/core', () => {
     )
   })
 
+  it('getInput handles dashes', () => {
+    expect(core.getInput('my dashing variable')).toBe(
+      'fabulous'
+    )
+  })
+  
   it('setOutput produces the correct command', () => {
     core.setOutput('some output', 'some value')
     assertWriteCalls([`::set-output name=some output,::some value${os.EOL}`])
